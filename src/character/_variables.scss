@@ -1,0 +1,16 @@
+// Base colors
+$--vy-leathen-blue: #81a3c6;
+$--vy-leathen-silver: #afb6c9;
+$--vy-leathen-light-blue: #cedbe4;
+$--vy-leathen-gray: #a0a0a0;
+$--vy-leathen-black: #423c33;
+
+// Theme colors variables
+$--vy-primary: $--vy-leathen-blue;
+$--vy-secondary: $--vy-leathen-silver;
+$--vy-light-beige: --vy-leathen-light-blue;
+$--vy-orange: $--vy-leathen-gray;
+$--vy-black: $--vy-leathen-black;
+
+// Font
+@font-face { font-family: Catcafe; src: url('../font/Catcafe-v5yM.ttf'); }

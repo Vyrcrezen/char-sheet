@@ -1,0 +1,9 @@
+node_modules
+save
+unused
+/dist/*.jpg
+/dist/*.png
+/dist/*.js
+/dist/*.txt
+/dist/*.css
+/dist/*.ttf

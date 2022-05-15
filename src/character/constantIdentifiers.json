@@ -1,0 +1,20 @@
+{
+    "charName": "Lethgrim",
+    "roleplayPoints": {
+        "Roleplay_overview": [
+            "Despite my noble birth, I do not place myself above other folk. We all have the same blood.",
+            "Responsibility. It is my duty to respect the authority of those above me, just as those below me must respect mine. (Lawful)",
+            "My loyalty to my sovereign is unwavering.",
+            "I hide a truly scandalous secret that could ruin my family forever."
+        ]
+    },
+    "mainCharacteristics": {
+        "alignment": "lawful neutral",
+        "age": "41 years",
+        "deity": "Savras",
+        "height": "1.94 m",
+        "weight": "67 kg",
+        "eye": "blue"
+    },
+    "dndBeyondPage": "https://www.dndbeyond.com/characters/24698917"
+}

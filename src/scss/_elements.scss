@@ -1,0 +1,74 @@
+@import "../character/_variables.scss";
+
+.vy-bg-primary {
+    background-color: $--vy-primary;
+}
+
+.vy-bg-secondary {
+    background-color: $--vy-secondary;
+}
+
+.vy-bg-secondary-light {
+    background-color: $--vy-light-beige;
+}
+
+.vy-primary {
+    color: $--vy-primary;
+}
+
+.vy-secondary {
+    color: $--vy-secondary;
+}
+
+html {
+    overflow: hidden;
+}
+
+body {
+    background-color: beige;
+    font-family: Catcafe;
+
+    font-size: 1.2rem;
+}
+
+#pageContent {
+    width: 100vw;
+    min-height: 100%;
+	height: 100vh;
+
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	perspective: 2px;
+	-webkit-perspective: 2px;
+	transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+}
+
+.vy-bg-bookmark {
+    background-image: url('../img/ribbon.png');
+    background-position: top;
+    background-repeat: no-repeat;
+
+    height: 40rem ;
+}
+
+.vy-bookmark-content {
+    margin: 2rem 1.3rem 11rem 1.3rem
+
+}
+
+.vy-bg-journal-texture {
+    background-image: url('../img/paper-texture-colored.png');
+    background-position: top;
+
+    min-height: 30rem;
+}
+
+.vy-item-selected {
+    background-color: $--vy-orange;
+}
+
+.vy-button-hover :hover {
+    background-color: rgba($--vy-secondary, .5);
+}
