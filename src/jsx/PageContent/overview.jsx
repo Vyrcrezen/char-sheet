@@ -22,6 +22,7 @@ export function OverviewSection({ stateModalImage, charSpecifics }) {
                 {charSpecifics.roleplayPoints[roleplayTopic].forEach((roleplayItem) => { roleplayPoints.push((<li>{roleplayItem}</li>)); })}
             </ul>
         ));
+        roleplayPoints.push((<br />));
     });
 
     return (

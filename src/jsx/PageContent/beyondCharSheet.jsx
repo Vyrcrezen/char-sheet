@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export function BeyondCharSheet({ charSpecifics }) {
     return (
         <section className="container" style={{ backgroundColor: 'rgba(197, 191, 180, 0.5)' }}>
-            <iframe className="w-100" style={{ height: '90vh' }} src={charSpecifics.dndBeyondPage} title="Leathgrim Character sheet" />
+            <iframe className="w-100" style={{ height: '90vh' }} src={charSpecifics.dndBeyondPage} title="Beyond Character sheet" />
         </section>
     );
 }

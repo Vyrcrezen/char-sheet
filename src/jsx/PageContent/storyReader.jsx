@@ -6,8 +6,22 @@ import {
     SvgDelete, SvgReader, SvgEdit, SvgNewEntry,
 } from '../../img/pictography.jsx';
 
+function JournaDeletionText({ title, designation }) {
+    return (
+        <span>
+            You are about to delete:&nbsp;
+            <b>{title}</b>
+            &nbsp;from&nbsp;
+            <b>{designation}</b>
+            !
+            <br />
+            Do you wish to proceed?
+        </span>
+    );
+}
+
 function JournalArea({
-    cCollection, stateSelectedEntry, divJournalTextArea, tinymce,
+    cCollection, stateSelectedEntry, divJournalTextArea, tinymce, setConfirmationModalContent,
 }) {
     const [editorActive, setEditorActive] = useState(false);
 
@@ -19,6 +33,11 @@ function JournalArea({
     function fillJournalTextArea() {
         if (editorActive === true) { document.getElementById(journalTextRenderDiv).innerHTML = ''; renderTinyMceEditor(tinymce, divJournalTextArea, stateSelectedEntry.get, cCollection); }
         else if (document.getElementById(journalTextRenderDiv) !== null) { document.getElementById(journalTextRenderDiv).innerHTML = displayedText; }
+    }
+
+    function removeCollectionEntry() {
+        if (editorActive === true) { tinymce.remove('textarea'); setEditorActive(false); }
+        cCollection.removeEntry(stateSelectedEntry.get); stateSelectedEntry.set('');
     }
 
     return (
@@ -39,12 +58,19 @@ function JournalArea({
                     >
                         {(editorActive) ? <SvgReader /> : <SvgEdit /> }
                     </button>
-                    <button className="w-50 h-100 rounded p-0 vy-button-hover" disabled={!bEntrySelected} onClick={() => { cCollection.removeEntry(stateSelectedEntry.get); stateSelectedEntry.set(''); }} type="button">
+                    <button
+                        className="w-50 h-100 rounded p-0 vy-button-hover"
+                        disabled={!bEntrySelected}
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmationModal"
+                        onClick={() => { setConfirmationModalContent({ text: <JournaDeletionText title={displayedTitle} designation={cCollection.desigantion} />, funSelectedYes: removeCollectionEntry }); }}
+                        type="button"
+                    >
                         <SvgDelete />
                     </button>
                 </div>
             </div>
-            <div id={divJournalTextArea} className="h-100 p-3 text-start vy-bg-journal-texture">
+            <div id={divJournalTextArea} className="p-3 text-start vy-bg-journal-texture" style={{ overflowY: 'scroll', maxHeight: '75vh' }}>
                 <textarea className="d-none" id="tinymce-text-area" />
                 <div id={journalTextRenderDiv} />
                 { fillJournalTextArea() }
@@ -111,7 +137,9 @@ function JournalBookmark({ cCollection, stateSelectedEntry }) {
     );
 }
 
-export function StoryReader({ cCollection, pageSelections, tinymce }) {
+export function StoryReader({
+    cCollection, pageSelections, tinymce, setConfirmationModalContent,
+}) {
     const divJournalTextArea = 'story-content-area';
     const [selectedEntryId, setSelectedEntryId] = useState('');
 
@@ -130,6 +158,7 @@ export function StoryReader({ cCollection, pageSelections, tinymce }) {
                             stateSelectedEntry={{ get: selectedEntryId, set: setSelectedEntryId }}
                             divJournalTextArea={divJournalTextArea}
                             tinymce={tinymce}
+                            setConfirmationModalContent={setConfirmationModalContent}
                         />
                     </div>
                 </div>
@@ -139,6 +168,11 @@ export function StoryReader({ cCollection, pageSelections, tinymce }) {
 }
 
 // Photo courtesy photos-public-domain.com
+
+JournaDeletionText.propTypes = {
+    title: PropTypes.string.isRequired,
+    designation: PropTypes.string.isRequired,
+};
 
 JournalBookmark.propTypes = {
     cCollection: PropTypes.instanceOf(ContentCollection).isRequired,
@@ -160,6 +194,10 @@ JournalArea.propTypes = {
     }).isRequired,
     divJournalTextArea: PropTypes.string.isRequired,
     tinymce: PropTypes.shape.isRequired,
+    setConfirmationModalContent: PropTypes.shape({
+        text: PropTypes.string.isRequired,
+        funSelectedYes: PropTypes.func.isRequired,
+    }).isRequired,
 };
 
 BookmarkButton.propTypes = {
@@ -183,6 +221,10 @@ StoryReader.propTypes = {
         changed: PropTypes.bool.isRequired,
     }).isRequired,
     tinymce: PropTypes.shape.isRequired,
+    setConfirmationModalContent: PropTypes.shape({
+        text: PropTypes.string.isRequired,
+        funSelectedYes: PropTypes.func.isRequired,
+    }).isRequired,
 };
 
 // <button className="btn" type="button" onClick={() => { renderTinyMceEditor('tinymce-text-area', cCollection.addNewEntry(), cCollection); cCollection.updateReactState(); }}> Add new </button>

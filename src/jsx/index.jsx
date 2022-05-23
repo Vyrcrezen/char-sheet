@@ -9,6 +9,7 @@ import { CodexSection } from './PageContent/codex.jsx';
 import { MiscSection } from './PageContent/misc.jsx';
 import { BeyondCharSheet } from './PageContent/beyondCharSheet.jsx';
 import { ImageDisplayModal } from './utils/imageModal.jsx';
+import { ConfirmationModal } from './utils/confirmationModal.jsx';
 import { ContentCollection } from './cContentCollection.jsx';
 import charSpecifics from '../character/constantIdentifiers.json';
 
@@ -34,6 +35,7 @@ function Main() {
     let prevPageSelection = useRef('overview');
     let selectionChanged = useRef(false);
     const [initWebApp, setInitWebApp] = useState(true);
+    const [confirmationModalContent, setConfirmationModalContent] = useState({ text: '', funSelectedYes: (() => false) });
 
     const [journalCharState, updateJournalChar] = useReducer((collectionState) => !collectionState, true);
     const [historyCharState, updateHistoryChar] = useReducer((collectionState) => !collectionState, true);
@@ -48,8 +50,8 @@ function Main() {
 
     function getPageSelection() {
         switch (pageSelection) {
-        case 'journal': return <StoryReader cCollection={cJournalCollection} pageSelections={{ prev: prevPageSelection, now: pageSelection, changed: selectionChanged }} tinymce={tinymce} />;
-        case 'history': return <StoryReader cCollection={cHistoryCollection} pageSelections={{ prev: prevPageSelection, now: pageSelection, changed: selectionChanged }} tinymce={tinymce} />;
+        case 'journal': return <StoryReader cCollection={cJournalCollection} pageSelections={{ prev: prevPageSelection, now: pageSelection, changed: selectionChanged }} tinymce={tinymce} setConfirmationModalContent={setConfirmationModalContent} />;
+        case 'history': return <StoryReader cCollection={cHistoryCollection} pageSelections={{ prev: prevPageSelection, now: pageSelection, changed: selectionChanged }} tinymce={tinymce} setConfirmationModalContent={setConfirmationModalContent} />;
         case 'codex': return <CodexSection />;
         case 'misc': return <MiscSection />;
         case 'charSheet': return <BeyondCharSheet charSpecifics={charSpecifics} />;
@@ -67,13 +69,12 @@ function Main() {
     return (
         <>
             <ImageDisplayModal modalImage={modalImage} />
+            <ConfirmationModal confirmationModalContent={confirmationModalContent} />
             <div id="pageContent">
                 <div className="parallax-container">
                     <div id="parallax-foreground">
-                        <header>
-                            <HeroTitle charSpecifics={charSpecifics} />
-                            <Navbar statePageSelection={{ get: pageSelection, set: setPageSelection }} persistentContents={{ journal: cJournalCollection, history: cHistoryCollection }} />
-                        </header>
+                        <HeroTitle charSpecifics={charSpecifics} />
+                        <Navbar statePageSelection={{ get: pageSelection, set: setPageSelection }} persistentContents={{ journal: cJournalCollection, history: cHistoryCollection }} />
                         {getPageSelection(pageSelection)}
                     </div>
                     <div className="background-tile" />

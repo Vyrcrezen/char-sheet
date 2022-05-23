@@ -9,7 +9,7 @@
 }
 
 .vy-bg-secondary-light {
-    background-color: $--vy-light-beige;
+    background-color: $--vy-dialog-background;
 }
 
 .vy-primary {
@@ -25,7 +25,7 @@ html {
 }
 
 body {
-    background-color: beige;
+    background-color: $--vy-page-background;
     font-family: Catcafe;
 
     font-size: 1.2rem;
@@ -37,7 +37,8 @@ body {
 	height: 100vh;
 
 	overflow-x: hidden;
-	overflow-y: auto;
+    overflow-y: hidden;
+	// overflow-y: auto;
 
 	perspective: 2px;
 	-webkit-perspective: 2px;
@@ -66,9 +67,9 @@ body {
 }
 
 .vy-item-selected {
-    background-color: $--vy-orange;
+    background-color: $--vy-selection;
 }
 
 .vy-button-hover :hover {
-    background-color: rgba($--vy-secondary, .5);
+    background-color: rgba($--vy-selection, .5);
 }
