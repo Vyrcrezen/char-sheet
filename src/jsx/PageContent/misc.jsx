@@ -2,7 +2,7 @@ import React from 'react';
 
 export function MiscSection() {
     return (
-        <section className="container" style={{ backgroundColor: 'rgba(197, 191, 180, 0.5)' }}>
+        <section className="container" style={{ backgroundColor: 'rgba(var(--vy-secondary), .7)' }}>
             <span>Misc!</span>
         </section>
     );

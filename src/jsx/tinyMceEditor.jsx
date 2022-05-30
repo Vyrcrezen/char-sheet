@@ -39,3 +39,20 @@ export function renderTinyMceEditor(tinymce, idDivContainer, entryId, cCollectio
         },
     });
 }
+
+export function initTinyMceEditor(tinymce, idTextArea, callbackOnEditorChange) {
+    tinymce.init({
+        selector: `textarea#${idTextArea}`,
+        /* All plugins need to be imported and added to the plugins option. */
+        plugins: 'advlist code emoticons link lists table',
+        toolbar: 'bold italic | fontsize | bullist numlist | link emoticons',
+        skin: false,
+        content_css: false,
+        browser_spellcheck: true,
+        fontsize_formats: '8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt',
+        content_style: `${contentUiCss.toString()}\n${contentCss.toString()}`,
+        setup: (editor) => {
+            editor.on('change', callbackOnEditorChange);
+        },
+    });
+}

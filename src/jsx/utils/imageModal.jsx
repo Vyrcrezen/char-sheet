@@ -5,7 +5,7 @@ export function ImageDisplayModal({ modalImage }) {
     return (
         <div className="modal fade" id="imageModal" tabIndex="-1" aria-labelledby="exampleModalLabel">
             <div className="modal-dialog modal-xl modal-fullscreen-lg-down">
-                <div className="modal-content vy-bg-secondary-light">
+                <div className="modal-content vy-bg-dialog">
                     <div className="modal-header">
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
                     </div>

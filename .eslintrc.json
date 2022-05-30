@@ -26,6 +26,7 @@
         "import/extensions": [ "error", "always" ],
         "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
         "max-len": ["error", { "code": 300 }],
-        "prefer-const": ["error", {"destructuring": "all"}]
+        "prefer-const": ["error", {"destructuring": "all"}],
+        "no-param-reassign": ["error", { "props": false }]
     }
 }

@@ -1,23 +1,54 @@
-@import "../character/_variables.scss";
-
 .vy-bg-primary {
-    background-color: $--vy-primary;
+    background-color: rgb(var(--vy-primary));
 }
 
 .vy-bg-secondary {
-    background-color: $--vy-secondary;
+    background-color: rgb(var(--vy-secondary));
 }
 
-.vy-bg-secondary-light {
-    background-color: $--vy-dialog-background;
+.vy-bg-selected {
+    background-color: rgb(var(--vy-selected));
+}
+
+.vy-bg-dialog {
+    background-color: rgb(var(--vy-bg-dialog));
+}
+
+.vy-bg-page {
+    background-color: rgb(var(--vy-bg-page));
 }
 
 .vy-primary {
-    color: $--vy-primary;
+    color: rgb(var(--vy-primary));
 }
 
 .vy-secondary {
-    color: $--vy-secondary;
+    color: rgb(var(--vy-secondary));
+}
+
+.vy-font-color-main {
+    color: rgb(var(--vy-font-color-main));
+}
+
+.vy-font-color-secondary {
+    color: rgb(var(--vy-font-color-secondary));
+}
+
+.vy-object-fit-cover {
+    object-fit: cover;
+}
+
+.vy-cursor-pointer {
+    cursor: pointer;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: var(--bs-table-striped-bg);
+    color: rgb(var(--vy-font-color-main));
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(var(--vy-font-color-secondary));
 }
 
 html {
@@ -25,8 +56,8 @@ html {
 }
 
 body {
-    background-color: $--vy-page-background;
-    font-family: Catcafe;
+    background-color: rgb(var(--vy-bg-page));
+    font-family: var(--vy-main-font);
 
     font-size: 1.2rem;
 }
@@ -37,8 +68,8 @@ body {
 	height: 100vh;
 
 	overflow-x: hidden;
-    overflow-y: hidden;
-	// overflow-y: auto;
+    // overflow-y: hidden;
+	overflow-y: auto;
 
 	perspective: 2px;
 	-webkit-perspective: 2px;
@@ -46,16 +77,18 @@ body {
 	-webkit-transform-style: preserve-3d;
 }
 
-.vy-bg-bookmark {
-    background-image: url('../img/ribbon.png');
-    background-position: top;
-    background-repeat: no-repeat;
+.vy-bookmark-ribbon {
+    color: rgb(var(--vy-primary));
+    object-fit: contain;
 
-    height: 40rem ;
+    z-index: 1010;
+
+    height: 100%;
 }
 
 .vy-bookmark-content {
-    margin: 2rem 1.3rem 11rem 1.3rem
+    margin: 2rem 1.3rem 11rem 1.3rem;
+    z-index: 1011;
 
 }
 
@@ -67,9 +100,24 @@ body {
 }
 
 .vy-item-selected {
-    background-color: $--vy-selection;
+    background-color: rgb(var(--vy-selected));
 }
 
 .vy-button-hover :hover {
-    background-color: rgba($--vy-selection, .5);
+    background-color: rgba(var(--vy-selected), .5);
+}
+
+.vy-faded-until-hover {
+    color: rgba(var(--vy-primary), .5);
+    background-color: rgba(var(--vy--secondary), .5);
+}
+
+.vy-faded-until-hover:hover {
+    color: rgba(var(--vy-primary), 1);
+    background-color: rgba(var(--vy--secondary), 1);
+}
+
+#heroTitleTextArea {
+    font-size: 3rem;
+    text-align: center;
 }

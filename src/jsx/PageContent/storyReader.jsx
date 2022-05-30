@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { renderTinyMceEditor } from '../tinyMceEditor.jsx';
 import { ContentCollection } from '../cContentCollection.jsx';
 import {
-    SvgDelete, SvgReader, SvgEdit, SvgNewEntry,
+    SvgDelete, SvgReader, SvgEdit, SvgNewEntry, BookmarkRibbon,
 } from '../../img/pictography.jsx';
 
 function JournaDeletionText({ title, designation }) {
@@ -89,6 +89,7 @@ function BookmarkButton({
             <button
                 className="btn fw-bold my-1 px-0"
                 type="button"
+                style={{ color: 'rgb(var(--vy-font-color-secondary))' }}
                 onClick={() => {
                     if (entryId !== stateSelectedEntry.get) { stateSelectedEntry.set(entryId); }
                     else { stateEditingTitle.set(true); }
@@ -96,8 +97,17 @@ function BookmarkButton({
             >
                 {
                     (entryId === stateSelectedEntry.get && stateEditingTitle.get === true)
-                        // eslint-disable-next-line jsx-a11y/no-autofocus
-                        ? (<textarea className="h-100" autoFocus onBlur={(event) => { cCollection.updateEntryTitle(entryId, event.currentTarget.value); cCollection.updateReactState(); stateEditingTitle.set(false); }}>{cCollection.Content[entryId].title}</textarea>)
+                        ? (
+                            <textarea
+                                className="h-100 text-center"
+                                // eslint-disable-next-line jsx-a11y/no-autofocus
+                                autoFocus
+                                onBlur={(event) => { cCollection.updateEntryTitle(entryId, event.currentTarget.value); cCollection.updateReactState(); stateEditingTitle.set(false); }}
+                                onKeyDown={(event) => { if (event.key === 'Enter') { cCollection.updateEntryTitle(entryId, event.currentTarget.value); cCollection.updateReactState(); stateEditingTitle.set(false); } }}
+                            >
+                                {cCollection.Content[entryId].title}
+                            </textarea>
+                        )
                         : cCollection.Content[entryId].title
                 }
             </button>
@@ -124,12 +134,15 @@ function JournalBookmark({ cCollection, stateSelectedEntry }) {
         return rBookmarks;
     }
 
+    // position-absolute start-0 top-0 vy-bookmark-ribbon
+
     return (
-        <div className="w-75 justify-content-center vy-bg-bookmark">
-            <div className="d-flex flex-column h-100 vy-bookmark-content">
-                {genBookmarks()}
+        <div className="position-relative w-75 justify-content-center" style={{ height: '1000px' }}>
+            <BookmarkRibbon className="position-absolute w-100 start-0 top-0 vy-bookmark-ribbon" />
+            <div className="d-flex position-relative flex-column h-100 vy-bookmark-content" style={{ color: 'rgb(var(--vy-font-color-secondary))' }}>
+                <div style={{ maxHeight: '750px', overflowY: 'auto' }}>{genBookmarks()}</div>
                 <hr style={{ height: '2px' }} />
-                <button className="btn" type="button" style={{ height: '3rem' }} onClick={() => { cCollection.addNewEntry(); cCollection.updateReactState(); }}>
+                <button className="btn" type="button" style={{ height: '3rem', color: 'inherit' }} onClick={() => { cCollection.addNewEntry(); cCollection.updateReactState(); }}>
                     <SvgNewEntry />
                 </button>
             </div>
@@ -146,7 +159,7 @@ export function StoryReader({
     if (pageSelections.changed) { tinymce.remove('textarea'); }
 
     return (
-        <section className="container" style={{ backgroundColor: 'rgba(197, 191, 180, 0.5)' }}>
+        <section className="container" style={{ backgroundColor: 'rgba(var(--vy-secondary), .7)' }}>
             <div className="row pt-4">
                 <div className="d-flex justify-content-center col-3 text-center">
                     <JournalBookmark cCollection={cCollection} stateSelectedEntry={{ get: selectedEntryId, set: setSelectedEntryId }} />

@@ -11,7 +11,7 @@ import { BeyondCharSheet } from './PageContent/beyondCharSheet.jsx';
 import { ImageDisplayModal } from './utils/imageModal.jsx';
 import { ConfirmationModal } from './utils/confirmationModal.jsx';
 import { ContentCollection } from './cContentCollection.jsx';
-import charSpecifics from '../character/constantIdentifiers.json';
+import { GeneralCollection } from './cGeneralCollection.jsx';
 
 import 'bootstrap';
 import '../scss/style.scss';
@@ -26,8 +26,11 @@ function unloadPageResources(prevSelection) {
     }
 }
 
+let cGeneralCollection;
 let cJournalCollection;
 let cHistoryCollection;
+
+const idBackgroundImgContainer = 'background-image';
 
 function Main() {
     const [modalImage, setModalImage] = useState('');
@@ -37,10 +40,15 @@ function Main() {
     const [initWebApp, setInitWebApp] = useState(true);
     const [confirmationModalContent, setConfirmationModalContent] = useState({ text: '', funSelectedYes: (() => false) });
 
+    const [generalCharState, updateGeneralChar] = useReducer((collectionState) => !collectionState, true);
     const [journalCharState, updateJournalChar] = useReducer((collectionState) => !collectionState, true);
     const [historyCharState, updateHistoryChar] = useReducer((collectionState) => !collectionState, true);
 
     if (initWebApp === true) {
+        cGeneralCollection = new GeneralCollection({}, idBackgroundImgContainer, generalCharState, updateGeneralChar, 'General');
+        cGeneralCollection.loadFromLocalStorage();
+        cGeneralCollection.overwriteColorVariables();
+        cGeneralCollection.overwriteFontVariables();
         cJournalCollection = new ContentCollection({}, journalCharState, updateJournalChar, 'Journal');
         cJournalCollection.loadFromLocalStorage();
         cHistoryCollection = new ContentCollection({}, historyCharState, updateHistoryChar, 'History');
@@ -48,14 +56,18 @@ function Main() {
         setInitWebApp(false);
     }
 
+    window.onload = (() => {
+        cGeneralCollection.renderBackground();
+    });
+
     function getPageSelection() {
         switch (pageSelection) {
         case 'journal': return <StoryReader cCollection={cJournalCollection} pageSelections={{ prev: prevPageSelection, now: pageSelection, changed: selectionChanged }} tinymce={tinymce} setConfirmationModalContent={setConfirmationModalContent} />;
         case 'history': return <StoryReader cCollection={cHistoryCollection} pageSelections={{ prev: prevPageSelection, now: pageSelection, changed: selectionChanged }} tinymce={tinymce} setConfirmationModalContent={setConfirmationModalContent} />;
         case 'codex': return <CodexSection />;
         case 'misc': return <MiscSection />;
-        case 'charSheet': return <BeyondCharSheet charSpecifics={charSpecifics} />;
-        default: return <OverviewSection stateModalImage={{ get: modalImage, set: setModalImage }} charSpecifics={charSpecifics} />;
+        case 'charSheet': return <BeyondCharSheet cGeneralCollection={cGeneralCollection} />;
+        default: return <OverviewSection cGeneralCollection={cGeneralCollection} tinymce={tinymce} stateModalImage={{ get: modalImage, set: setModalImage }} />;
         }
     }
 
@@ -72,13 +84,13 @@ function Main() {
             <ConfirmationModal confirmationModalContent={confirmationModalContent} />
             <div id="pageContent">
                 <div className="parallax-container">
-                    <div id="parallax-foreground">
-                        <HeroTitle charSpecifics={charSpecifics} />
-                        <Navbar statePageSelection={{ get: pageSelection, set: setPageSelection }} persistentContents={{ journal: cJournalCollection, history: cHistoryCollection }} />
+                    <div id="parallax-foreground" className="vy-font-color-main">
+                        <HeroTitle cGeneralCollection={cGeneralCollection} />
+                        <Navbar statePageSelection={{ get: pageSelection, set: setPageSelection }} persistentContents={{ general: cGeneralCollection, journal: cJournalCollection, history: cHistoryCollection }} />
                         {getPageSelection(pageSelection)}
                     </div>
                     <div className="background-tile" />
-                    <div className="background-image" />
+                    <div id="background-image" />
                 </div>
             </div>
         </>

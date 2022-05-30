@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { GeneralCollection } from './cGeneralCollection.jsx';
 import { ContentCollection } from './cContentCollection.jsx';
 
 function loadCharContentFile(inputElementId, persistentContents) {
@@ -10,6 +11,9 @@ function loadCharContentFile(inputElementId, persistentContents) {
         mFileReader.onload = (() => {
             const mergedCharData = JSON.parse(mFileReader.result);
 
+            if (typeof mergedCharData.general === 'object') {
+                persistentContents.general.replaceContent(mergedCharData.general); persistentContents.general.renderBackground(); persistentContents.general.overwriteColorVariables(); persistentContents.general.overwriteFontVariables(); persistentContents.general.updateReactState();
+            }
             if (typeof mergedCharData.journal === 'object') { persistentContents.journal.replaceContent(mergedCharData.journal); persistentContents.journal.updateReactState(); }
             if (typeof mergedCharData.history === 'object') { persistentContents.history.replaceContent(mergedCharData.history); persistentContents.history.updateReactState(); }
         });
@@ -27,7 +31,7 @@ export function Navbar({ statePageSelection, persistentContents }) {
     }
 
     function downloadCharContent() {
-        const charData = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ journal: persistentContents.journal.Content, history: persistentContents.history.Content }))}`;
+        const charData = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ general: persistentContents.general.Content, journal: persistentContents.journal.Content, history: persistentContents.history.Content }))}`;
         const dataDownloadAnchor = document.createElement('a');
         dataDownloadAnchor.setAttribute('href', charData);
         dataDownloadAnchor.setAttribute('download', 'charData.json');
@@ -35,8 +39,8 @@ export function Navbar({ statePageSelection, persistentContents }) {
     }
 
     return (
-        <div className="container-xl sticky-top vy-bg-primary">
-            <nav className="navbar navbar-expand-xl p-0 navbar-light ">
+        <div className="container-xl vy-bg-primary">
+            <nav className="navbar navbar-expand-xl p-0 navbar-light">
                 <div className="container-lg d-flex flex-row p-0">
                     <div>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarItems" aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,6 +76,7 @@ Navbar.propTypes = {
         set: PropTypes.func.isRequired,
     }).isRequired,
     persistentContents: PropTypes.shape({
+        general: PropTypes.instanceOf(GeneralCollection).isRequired,
         journal: PropTypes.instanceOf(ContentCollection).isRequired,
         history: PropTypes.instanceOf(ContentCollection).isRequired,
     }).isRequired,

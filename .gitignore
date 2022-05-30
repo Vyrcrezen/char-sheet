@@ -7,3 +7,4 @@ unused
 /dist/*.txt
 /dist/*.css
 /dist/*.ttf
+/dist/*.svg

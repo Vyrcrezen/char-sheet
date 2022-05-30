@@ -1,16 +1,41 @@
 // Base colors
-$--vy-leathen-blue: #81a3c6;
-$--vy-leathen-silver: #afb6c9;
-$--vy-leathen-light-blue: #cedbe4;
-$--vy-leathen-gray: #a0a0a0;
-$--vy-leathen-black: #423c33;
+$--vy-nisshu-green: #6b704d;
+$--vy-nisshu-beige: #afa088;
+$--vy-nisshu-light-beige: #c5bfb4;
+$--vy-parchment-beige: #f1f2d5;
+$--vy-nisshu-orange: #c27f0d;
+$--vy-nisshu-black: #423c33;
+
+$--vy-distracting-pink: #ff00ff;
 
 // Theme colors variables
-$--vy-primary: $--vy-leathen-blue;
-$--vy-secondary: $--vy-leathen-silver;
-$--vy-light-beige: --vy-leathen-light-blue;
-$--vy-orange: $--vy-leathen-gray;
-$--vy-black: $--vy-leathen-black;
+$--vy-primary: $--vy-nisshu-green;
+$--vy-secondary: $--vy-nisshu-beige;
+
+$--vy-page-background: $--vy-parchment-beige;
+
+$--vy-dialog-background: $--vy-nisshu-light-beige;
+$--vy-light-beige: $--vy-distracting-pink;
+
+$--vy-selection: $--vy-nisshu-orange;
+$--vy-orange: $--vy-distracting-pink;
+
+$--vy-text-over-bright: $--vy-nisshu-black;
+$--vy-black: $--vy-distracting-pink;
+
+:root {
+    --vy-primary:107, 112, 77;
+    --vy-secondary: 175, 160, 136;
+    --vy-bg-page: 241, 242, 213;
+    --vy-bg-dialog: 197, 191, 180;
+    --vy-selected: 194, 127, 13;
+    --vy-font-color-main: 66, 60, 51;
+    --vy-font-color-secondary: 66, 60, 51;
+
+    --vy-secondary-alpha: .7;
+
+    --vy-main-font: Catcafe;
+}
 
 // Font
 @font-face { font-family: Catcafe; src: url('../font/Catcafe-v5yM.ttf'); }

@@ -5,7 +5,7 @@ export function ConfirmationModal({ confirmationModalContent }) {
     return (
         <div className="modal fade" id="confirmationModal" tabIndex="-1" aria-labelledby="exampleModalLabel">
             <div className="modal-dialog modal-md modal-fullscreen-lg-down">
-                <div className="modal-content vy-bg-secondary-light">
+                <div className="modal-content vy-bg-dialog">
                     <div className="modal-header">
                         <span>Please confirm</span>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
